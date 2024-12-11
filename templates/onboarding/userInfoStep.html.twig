@@ -1,0 +1,12 @@
+{% extends 'onboarding/layout.html.twig' %}
+
+{% block form %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-primary">
+            Next
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

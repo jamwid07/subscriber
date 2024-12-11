@@ -1,3 +1,9 @@
 body {
     background-color: skyblue;
 }
+.card {
+    box-shadow: 5px 5px 5px #999;
+}
+input[type='radio'] + label {
+    margin: 0 10px 0 5px;
+}

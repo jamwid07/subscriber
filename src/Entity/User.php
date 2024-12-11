@@ -12,8 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User
 {
-    public const SUBSCRIPTION_FREE = 'free';
-    public const SUBSCRIPTION_PREMIUM = 'premium';
+    public const string SUBSCRIPTION_FREE    = 'free';
+    public const string SUBSCRIPTION_PREMIUM = 'premium';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,7 +31,7 @@ class User
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 10)]
+    #[Assert\Length(min: 10, minMessage: "Phone number must be at least 10 digits")]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 20)]
@@ -39,9 +39,8 @@ class User
     #[Assert\Choice(choices: [self::SUBSCRIPTION_FREE, self::SUBSCRIPTION_PREMIUM])]
     private ?string $subscriptionType = null;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\NotBlank]
-    private \DateTime $createdAt;
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'now()'])]
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Address $address = null;
@@ -98,12 +97,12 @@ class User
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;

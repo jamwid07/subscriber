@@ -73,7 +73,7 @@ class Address
         return $this->city;
     }
 
-    public function setCity(string $city): static
+    public function setCity(?string $city): static
     {
         $this->city = $city;
         return $this;
@@ -84,7 +84,7 @@ class Address
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode): static
+    public function setPostalCode(?string $postalCode): static
     {
         $this->postalCode = $postalCode;
         return $this;
@@ -95,7 +95,7 @@ class Address
         return $this->stateProvince;
     }
 
-    public function setStateProvince(string $stateProvince): static
+    public function setStateProvince(?string $stateProvince): static
     {
         $this->stateProvince = $stateProvince;
         return $this;
@@ -106,7 +106,7 @@ class Address
         return $this->country;
     }
 
-    public function setCountry(string $country): static
+    public function setCountry(?string $country): static
     {
         $this->country = $country;
         return $this;

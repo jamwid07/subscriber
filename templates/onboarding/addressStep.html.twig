@@ -1,0 +1,16 @@
+{% extends 'onboarding/layout.html.twig' %}
+
+{% block form %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{{ path('onboarding', {'step': 'userInfoStep'}) }}" class="btn btn-secondary">
+            Back
+        </a>
+
+        <button type="submit" class="btn btn-primary">
+            Next
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

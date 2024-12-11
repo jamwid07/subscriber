@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration Complete{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2 class="text-success mb-4">
+                        <i class="fas fa-check-circle"></i>
+                        Registration Complete!
+                    </h2>
+                    <p class="lead">Thank you for registering with us. Your account has been successfully created.</p>
+                    <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Go to Homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

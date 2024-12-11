@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PaymentInformationRepository;
+use App\Validator\NotExpired;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,12 +17,13 @@ class PaymentInformation
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\CardScheme(null)]
+    #[Assert\Luhn]
     private ?string $cardNumber = null;
 
     #[ORM\Column(length: 5)]
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/^(0[1-9]|1[0-2])\/([0-9]{2})$/', message: 'Expiration date must be in MM/YY format')]
+    #[NotExpired]
     private ?string $expirationDate = null;
 
     #[ORM\Column(length: 3)]

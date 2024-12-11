@@ -1,0 +1,60 @@
+{% extends 'onboarding/layout.html.twig' %}
+
+{% import _self as me %}
+
+{% block form %}
+        <div class="confirmation-summary">
+            <h5>Personal Information</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Name:</dt>
+                <dd class="col-sm-9">{{ user.name }}</dd>
+
+                <dt class="col-sm-3">Email:</dt>
+                <dd class="col-sm-9">{{ user.email }}</dd>
+
+                <dt class="col-sm-3">Phone:</dt>
+                <dd class="col-sm-9">{{ user.phoneNumber }}</dd>
+
+                <dt class="col-sm-3">Subscription:</dt>
+                <dd class="col-sm-9">{{ user.subscriptionType|capitalize }}</dd>
+            </dl>
+
+            <h5>Address Information</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Address:</dt>
+                <dd class="col-sm-9">
+                    {{ address.addressLine1 }}<br>
+                    {% if address.addressLine2 %}
+                        {{ address.addressLine2 }}<br>
+                    {% endif %}
+                    {{ address.city }},
+                    {% if address.stateProvince %}
+                        {{ address.stateProvince }}
+                    {% endif %}
+                    {{ address.postalCode }}<br>
+                    {{ address.country|country_name }}
+                </dd>
+            </dl>
+
+            {% if user.subscriptionType == 'premium' and paymentInfo %}
+                <h5>Payment Information</h5>
+                <dl class="row">
+                    <dt class="col-sm-3">Card Number:</dt>
+                    <dd class="col-sm-9">{{ me.mask_card_number(paymentInfo.cardNumber) }}</dd>
+
+                    <dt class="col-sm-3">Expiration:</dt>
+                    <dd class="col-sm-9">{{ paymentInfo.expirationDate }}</dd>
+                </dl>
+            {% endif %}
+            <div class="d-flex justify-content-around mt-4">
+                <a href="{{ path('onboarding',
+                    {'step': user.subscriptionType == 'premium' ? 'paymentInfoStep' :'addressStep'}) }}"
+                   class="btn btn-secondary">Back</a>
+
+                <a href="{{ path('saveUser') }}" class="btn btn-primary">
+                    Save
+                </a>
+            </div>
+
+        </div>
+{% endblock %}

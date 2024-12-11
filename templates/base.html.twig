@@ -1,5 +1,11 @@
+{% macro mask_card_number(number) %}
+    {% if number %}
+        {{ number|slice(0, 4) ~ ' **** **** ' ~ number|slice(-4) }}
+    {% endif %}
+{% endmacro %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>

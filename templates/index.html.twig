@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% import _self as me %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <style>
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .navigation span {
+            margin: 0 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#usersTable').DataTable({
+                "paging": false,
+                "info": false,
+                "order": [[0, "desc"]]
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h2 class="my-1">Users List</h2>
+                <a class="btn btn-success" href="{{ path('onboarding', {step: 1}) }}">Add Subscriber</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="usersTable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subscription Type</th>
+                                <th>Address</th>
+                                <th>Credit Card</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in pagination %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.subscriptionType }}</td>
+                                <td>{{ user.address.addressLine1 }}</td>
+                                <td>{{ user.paymentInformation ? me.mask_card_number(user.paymentInformation.cardNumber) : null }}</td>
+                                <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination, null, {}, {
+                        'align': 'center',
+                        'size': 'small',
+                        'rounded': true,
+                        'bordered': true
+                    }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
