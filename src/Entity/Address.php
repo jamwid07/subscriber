@@ -30,6 +30,12 @@ class Address
     private ?string $postalCode = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\When(
+        expression: "this.getCountry() in ['US', 'CA', 'GB', 'AU', 'SP']",
+        constraints: [
+            new Assert\NotBlank(message: 'State is required for this country')
+        ]
+    )]
     private ?string $stateProvince = null;
 
     #[ORM\Column(length: 2)]
