@@ -16,7 +16,8 @@ class NotExpiredValidator extends ConstraintValidator
             return;
         }
 
-        $date = \DateTime::createFromFormat('d/y', $value);
+        $date = \DateTime::createFromFormat('m/y', $value)
+            ->add(\DateInterval::createFromDateString('1 month'));
         if ($date < new \DateTime()) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
